@@ -1,23 +1,25 @@
 const express = require("express");
+const mongoose = require("mongoose");
 require("dotenv/config");
 
 const app = express();
 
+
 //database connection
 const connect = async () => {
-    const MongoClient = require("mongodb").MongoClient;
-    const client = new MongoClient(process.env.DB_CONNECTION, { useNewUrlParser: true, useUnifiedTopology: true, });
-    
     try {
-        await client.connect(err => {
-            const collection = client.db("deselectDB")});
-            console.log("Connected to MongoDB!")
-    } catch (e) {
-        console.error("Could not connect to MongoDB :(", e);
-    } 
-}
+        await mongoose.connect(process.env.DB_CONNECTION, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+            useCreateIndex: true
+        })
+        console.log("Connected to MongoDB!")
+    } catch(e) {
+        console.error("Could not connect to MongoDB...", e)
+    }
+};
 
-connect()
+connect();
 
 app.get("/", (req, res) => {
     res.send("Hello World")
