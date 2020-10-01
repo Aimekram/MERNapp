@@ -6,8 +6,20 @@ const Student = require("../models/Student");
 
 // get students
 router.get("/", async (req, res) => {
-    const students = await Student.find().sort("name")
+    const students = await Student.find().sort("nationality")
     res.status(200).json(students);
+});
+
+// add student
+router.post("/", async (req, res) => {
+    try {
+          const newStudent = new Student(req.body)
+          await newStudent.save();
+          if(!newStudent) throw Error(`Something went wrong with saving student named ${student.firstName}`)
+          res.status(200).json(newStudent);
+    } catch(e) {
+        res.status(400).json({ msg: e.message });
+    }
 });
 
 //populate database with initial students 

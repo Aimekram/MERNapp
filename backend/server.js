@@ -1,10 +1,14 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
 require("dotenv/config");
-
 const app = express();
 
 const students = require("./routes/students");
+
+//set up body parser to read request's body
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 //database connection
 const connect = async () => {
