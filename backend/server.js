@@ -4,6 +4,7 @@ require("dotenv/config");
 
 const app = express();
 
+const init = require('./routes/init');
 
 //database connection
 const connect = async () => {
@@ -21,10 +22,14 @@ const connect = async () => {
 
 connect();
 
-app.get("/", (req, res) => {
-    res.send("Hello World")
-})
+// use routes
+app.use('/init', init);
 
+const Student = require("./models/Student");
+app.get("/", async (req, res) => {
+    const students = await Student.find().sort("name")
+    res.send(students)
+})
 
 //PORT listening
 const PORT = process.env.PORT || 4000;
