@@ -19,9 +19,7 @@ const NewStudent = () => {
         try {
             const response = await fetch("http://localhost:4000/api/students", requestOptions);
             if(!response.ok) { throw new Error("Server error") }
-            setDataSent('success');
         } catch(error) {
-            setDataSent('error');
             console.error(error);
         }
     }
