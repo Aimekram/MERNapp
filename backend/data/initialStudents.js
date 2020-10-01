@@ -1,9 +1,4 @@
-const express = require("express");
-const router = express.Router();
-
-const Student = require("../models/Student");
-
-const initStudents = [
+const initialStudents = [
   {firstName: "John", lastName: "Doe", age: 24, nationality: "English"},
   {firstName: "Jan", lastName: "Dewaele", age: 27, nationality: "Belgian"},
   {firstName: "Jonathan", lastName: "Van Driessen", age: 33, nationality: "Belgian"},
@@ -15,14 +10,4 @@ const initStudents = [
   {firstName: "Furkan", lastName: "Kursun", age: 23, nationality: "Turkish"}
 ]
 
-//populate database with initial students 
-router.post('/', (req, res) => {
-  let newStudent;
-  initStudents.map( async student => {
-    newStudent = new Student(student)
-    await newStudent.save();
-    res.send(newStudent)
-  })
-});
-
-module.exports = router;
+module.exports = initialStudents
