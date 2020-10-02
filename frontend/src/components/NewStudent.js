@@ -1,11 +1,12 @@
 import React from "react";
 
 const NewStudent = () => {
+
     const handleSubmit = async e => {
         if (!e.target.checkValidity()) { return };
 
-        const data = new FormData(e.target);
-        const body = {};
+        let data = new FormData(e.target);
+        let body = {};
         data.forEach((value, property) => body[property] = value);
 
         console.log(`body: ${JSON.stringify(body)}`)
@@ -17,17 +18,31 @@ const NewStudent = () => {
         };
         
         try {
-            const response = await fetch("http://localhost:4000/api/students", requestOptions);
-            if(!response.ok) { throw new Error("Server error") }
+            await fetch("http://localhost:4000/api/students", requestOptions);            
         } catch(error) {
             console.error(error);
         }
+
+        // clear data
+        data = new FormData();
+        body = {};
     }
 
 
     return (
         <form onSubmit={handleSubmit}>
             <div>
+                <label htmlFor="id">ID</label>
+                <input 
+                    type="number" 
+                    name="id" 
+                    placeholder="10" 
+                    required 
+                    min="0"
+                    step="1"
+                    title="Your ID should be a number"
+                />
+
                 <label htmlFor="firstName">First name</label>
                 <input 
                     type="text" 
